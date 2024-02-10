@@ -58,14 +58,14 @@ int getInput() {
   while (key != '#') {
     char key = keypad.getKey();
     
-    if (key) {
-      value = (value * 10) + (key - '0');
-      Serial.println(value);
-      delay(1000);
-    }
-
-    if (key == '*') {
+    if (key !=0) {
+      
+      if (key == '*') {
       value = 0;
+      } else if (key != '#') {
+        value = (value * 10) + (key - '0');
+        Serial.println(value);
+      }
     }
   }
   return value;
