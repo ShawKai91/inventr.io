@@ -1,6 +1,7 @@
 /* 
  *  guessNum by:
  *  ShawKai 30 jan 2024
+ *  ShawKai 10 feb 2024
  */
 #include <Keypad.h>
 #include <Key.h>
@@ -32,7 +33,8 @@ void setup() {
 void loop() {
 
   char key = keypad.getKey();
-  int value = key - '0'; // '0' = 48
+  int value = 0;
+//  value = key - '0'; // '0' = 48
   
   if (key){
   Serial.println(key);
@@ -58,21 +60,20 @@ int getInput() {
   while (key != '#') {
     char key = keypad.getKey();
     
-    if (key !=0) {
-      
+    if (key !=0) {     
       if (key == '*') {
       value = 0;
       } else if (key != '#') {
         value = (value * 10) + (key - '0');
         Serial.println(value);
+      } else {
+        return value;
       }
     }
   }
-  return value;
 }
 void feedbackLED(byte LED) {
   digitalWrite(LED, HIGH);
     delay(500);
     digitalWrite(LED, LOW);
-//    delay(500);
 }
