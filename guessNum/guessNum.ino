@@ -56,7 +56,7 @@ void loop() {
 }
 
 int getInput() {
-  char key;
+  char key = keypad.getKey();
   int inputValue = 0;
 
   while (key != '#') {
