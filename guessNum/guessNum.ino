@@ -22,7 +22,6 @@ TM1637Display display(tm1637_pins[0], tm1637_pins[1]);
 
 const byte LED_pins[] = {/*to high*/A0, /*corect*/A1, /*to low*/A2};
 void setup() {
-  
   Serial.begin(9600);
 
   display.setBrightness(7);
@@ -34,7 +33,7 @@ void setup() {
 void loop() {
 
   char key = keypad.getKey();
-  int value;
+  int value = 0;
 //  value = key - '0'; // '0' = 48
 
 if (key == '*') {
@@ -42,10 +41,6 @@ if (key == '*') {
   }
   
   if (key){
-  Serial.println(key);
-  Serial.println(value);
-  Serial.println();
-  
   display.showNumberDec(value);
   }
   
@@ -61,19 +56,20 @@ int getInput() {
     
   while (key != '#') {
     char key = keypad.getKey();
-    
-    if (key !=0) {     
+
+    if (key !=0) {   
+      Serial.println(key);  
       if (key == '*') {
       inputValue = 0;
       } else if (key != '#') {
         inputValue = (inputValue * 10) + (key - '0');
-        Serial.println(inputValue);
       } else {
-        return inputValue;
+//        return inputValue;
       }
     }
   }
-//  return inputValue;
+  Serial.println(inputValue);
+  return inputValue;
 }
 void feedbackLED(byte LED) {
   digitalWrite(LED, HIGH);
