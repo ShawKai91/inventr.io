@@ -5,9 +5,9 @@
 */
 #include <Keypad.h>
 #include <Key.h>
-const byte ROWS = 4, COLS = 3;
-byte rowPins[ROWS] = {9, 8, 7, 6}; //connect to the row pinouts of the keypad
-byte colPins[COLS] = {10, 11, 12}; //connect to the column pinouts of the keypad
+const byte ROWS = 4, COLS = 3,
+rowPins[ROWS] = {9, 8, 7, 6}, //connect to the row pinouts of the keypad
+colPins[COLS] = {10, 11, 12}; //connect to the column pinouts of the keypad
 char keys[ROWS][COLS] = {
   {'1', '2', '3'},
   {'4', '5', '6'},
