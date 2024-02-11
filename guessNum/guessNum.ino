@@ -38,6 +38,10 @@ void loop() {
   char key = keypad.getKey();
   int value;
   //  value = key - '0'; // '0' = 48
+  
+  Serial.println(key);
+  Serial.println(value);
+  Serial.println();
 
   if (key == '3') {
     feedbackLED(LED_pins[0]);
