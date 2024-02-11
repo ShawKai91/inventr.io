@@ -73,6 +73,7 @@ int getInput() {
       }
     }
   }
+//  return inputValue;
 }
 void feedbackLED(byte LED) {
   digitalWrite(LED, HIGH);
