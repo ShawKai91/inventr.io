@@ -38,15 +38,6 @@ void loop() {
   char key = keypad.getKey();
   int value;
   //  value = key - '0'; // '0' = 48
-  Serial.println(value);
-
-  if (key == '*') {
-    value = getInput();
-  }
-
-  if (key) {
-    display.showNumberDec(value);
-  }
 
   if (key == '3') {
     feedbackLED(LED_pins[0]);
@@ -57,7 +48,11 @@ void loop() {
   if (key == '9') {
     feedbackLED(LED_pins[2]);
   }
+  if (key == '*') {
+    value = getInput();
+  }
 
+  display.showNumberDec(value);
 }
 
 int getInput() {
