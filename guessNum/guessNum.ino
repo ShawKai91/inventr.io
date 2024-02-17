@@ -17,7 +17,7 @@ char keys[ROWS][COLS] = {
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
 #include <TM1637Display.h>
-const byte tm1637_pins[] = {/*clock*/4, /*DIO*/5};
+const byte tm1637_pins[] = {/*clock*/A4, /*DIO*/A5};
 TM1637Display display(tm1637_pins[0], tm1637_pins[1]);
 
 const byte LED_pins[] = {/*to high*/A0, /*corect*/A1, /*to low*/A2};
@@ -39,9 +39,9 @@ void loop() {
   int value;
   //  value = key - '0'; // '0' = 48
   
-  Serial.println(key);
-  Serial.println(value);
-  Serial.println();
+//  Serial.println(key);
+//  Serial.println(value);
+//  Serial.println();
 
   if (key == '3') {
     feedbackLED(LED_pins[0]);
@@ -75,6 +75,11 @@ int getInput() {
       }
     }
   }
+  
+  if (inputValue > 9999 or inputValue < 0) {
+    inputValue = -1;
+  }
+  
   Serial.println(inputValue);
   return inputValue;
 }
