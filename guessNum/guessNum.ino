@@ -18,7 +18,7 @@ void setup() {
   randomSeed(analogRead(0));
   toBeGuessed = random(1, 10000);
   beingGuessed = toBeGuessed;
-  
+
   display.setBrightness(7);
   display.clear();
 
@@ -34,9 +34,9 @@ void loop() {
     char key = keypad.getKey();
 
     switch (key) {
-      case '3': feedbackLED(LED_pins[toHigh]);   break;
+      case '3': feedbackLED(LED_pins[toHigh]);  break;
       case '6': feedbackLED(LED_pins[correct]); break;
-      case '9': feedbackLED(LED_pins[toLow]);  break;
+      case '9': feedbackLED(LED_pins[toLow]);   break;
       case '*': beingGuessed = getInput();      break;
       default:  break;
     }

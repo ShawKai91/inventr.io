@@ -1,3 +1,7 @@
+/*
+    guessNum by:
+    ShawKai   2024[30 jan, 10 feb, 09 mar, 12 mar, 30 mar]
+*/
 // setup "drivers" (libraries)
 #include <Keypad.h>
 #include <Key.h>
