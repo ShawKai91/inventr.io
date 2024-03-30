@@ -1,90 +1,46 @@
 /*
     guessNum by:
-    ShawKai 30 jan 2024
-    ShawKai 10 feb 2024
+    ShawKai   2024[30 jan, 10 feb, 09 mar, 12 mar, 30 mar]
 */
-#include <Keypad.h>
-#include <Key.h>
-const byte ROWS = 4, COLS = 3,
-rowPins[ROWS] = {9, 8, 7, 6}, //connect to the row pinouts of the keypad
-colPins[COLS] = {10, 11, 12}; //connect to the column pinouts of the keypad
-char keys[ROWS][COLS] = {
-  {'1', '2', '3'},
-  {'4', '5', '6'},
-  {'7', '8', '9'},
-  {'*', '0', '#'}
-};
-Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
+#include "Drivers.h"
+// setup pins to be used
+const byte LED_pins[] = {/*to High*/A0, /*corect*/A1, /*to Low*/A2};
 
-#include <TM1637Display.h>
-const byte tm1637_pins[] = {/*clock*/A4, /*DIO*/A5};
-TM1637Display display(tm1637_pins[0], tm1637_pins[1]);
+//setup variables to be used
+const byte toHigh = 0, correct = 1, toLow = 2;
+int beingGuessed, toBeGuessed, lives = 5;
 
-const byte LED_pins[] = {/*to high*/A0, /*corect*/A1, /*to low*/A2};
+#include "Functions.h"
+// setup default behavear for functions
+void feedback7seg(bool showLives = 0);
 
 void setup() {
-  Serial.begin(9600);
-
-  display.clear();
+  randomSeed(analogRead(0));
+  toBeGuessed = random(1, 10000);
+  beingGuessed = toBeGuessed;
+  
   display.setBrightness(7);
+  display.clear();
 
   for (int i = 0; i < 3; i++) {
     pinMode(LED_pins[i], OUTPUT);
   }
+
+  Serial.begin(9600);
 }
 
 void loop() {
+  while (lives > 0) {
+    char key = keypad.getKey();
 
-  char key = keypad.getKey();
-  int value;
-  //  value = key - '0'; // '0' = 48
-  
-//  Serial.println(key);
-//  Serial.println(value);
-//  Serial.println();
-
-  if (key == '3') {
-    feedbackLED(LED_pins[0]);
-  }
-  if (key == '6') {
-    feedbackLED(LED_pins[1]);
-  }
-  if (key == '9') {
-    feedbackLED(LED_pins[2]);
-  }
-  if (key == '*') {
-    value = getInput();
-  }
-
-  display.showNumberDec(value);
-}
-
-int getInput() {
-  char key = keypad.getKey();
-  int inputValue = 0;
-
-  while (key != '#') {
-    key = keypad.getKey();
-
-    if (key != 0) {
-      Serial.println(key);
-      if (key == '*') {
-        inputValue = 0;
-      } else if (key != '#') {
-        inputValue = (inputValue * 10) + (key - '0');
-      }
+    switch (key) {
+      case '3': feedbackLED(LED_pins[toHigh]);   break;
+      case '6': feedbackLED(LED_pins[correct]); break;
+      case '9': feedbackLED(LED_pins[toLow]);  break;
+      case '*': beingGuessed = getInput();      break;
+      default:  break;
     }
+
+    feedback7seg();
   }
-  
-  if (inputValue > 9999 or inputValue < 0) {
-    inputValue = -1;
-  }
-  
-  Serial.println(inputValue);
-  return inputValue;
-}
-void feedbackLED(byte LED) {
-  digitalWrite(LED, HIGH);
-  delay(500);
-  digitalWrite(LED, LOW);
 }
